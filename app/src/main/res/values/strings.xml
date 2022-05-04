@@ -1,0 +1,482 @@
+<resources>
+    <string name="app_name">In4chan</string>
+    <string name="welcome">WELCOME</string>
+    <string name="About">ABOUT ME</string>
+    <string name="words">MY OWN WORDS</string>
+    <string name="social">SOCIAL</string>
+    <string name="general">GENERAL</string>
+    <string name="language">Language</string>
+    <string name="done">Done</string>
+
+    <!--Social lines pt 1 start-->
+    <string name="first_social">Balanced</string>
+    <string name="second_social">Spontaneous</string>
+    <string name="third_social">Homebody</string>
+    <string name="fourth_social">Party-Lover</string>
+    <string name="fifth_social">Neat</string>
+    <string name="six_social">Messy</string>
+    <string name="seven_social">Shy</string>
+    <string name="eight_social">Forward</string>
+    <string name="none">None</string>
+    <!--Social lines pt 1 end-->
+
+    <!--Social lines pt 2 start-->
+    <string name="profession">Profession</string>
+    <string name="religion">Religion</string>
+    <string name="FavFood">Favourite Food</string>
+    <string name="music">Music</string>
+    <string name="Sports">Sports</string>
+    <string name="GoingOut">Going out</string>
+    <string name="Travel">Travel</string>
+    <string name="Interests">Interests</string>
+    <!--Social lines pt 2 end-->
+    <string name="AboutMe">About Me</string>
+    <string name="detail_about">This information will be displayed in your profile so, write something catchy to attract other members to your profile.</string>
+    <string name="welcome_content">Welcome to DREAM DATING. Complete your profile in order to make it more attractive.</string>
+    <string name="profile_pic">Please choose a picture for your profile to upload.</string>
+    <string name="login">Log In</string>
+    <string name="signUp">Sign Up</string>
+    <string name="f_name">First Name</string>
+    <string name="l_name">Last Name</string>
+    <string name="Phone">Phone no.</string>
+    <string name="email">Email</string>
+    <string name="user">Username</string>
+    <string name="age">Date of Birth</string>
+    <string name="pass">Password</string>
+    <string name="c_pass">Confirm Password</string>
+    <string name="profile">Profiles</string>
+    <string name="profile_age">Age</string>
+    <string name="profile_about">About</string>
+    <string name="profile_likes">Preferences</string>
+    <string name="profile_Bio">HeadLine</string>
+    <string name="setting">Settings</string>
+    <string name="already">Already registered?</string>
+    <string name="notAlready">Not yet registered?</string>
+    <string name="forgot_pass">Forgot Password?</string>
+    <string name="Terms_cond">I am 18+ years old and I agree with the <a href='https://www.del-flex.com'>Terms of Service and Privacy Notice.</a></string>
+    <string name="back">Back</string>
+    <string name="skip">Skip</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="upload">Upload</string>
+    <string name="forgot">Forgotten password?</string>
+    <string name="see">View</string>
+
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_user">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="chat">CHAT</string>
+    <string name="visit">Visited</string>
+    <string name="fav">Favourites</string>
+    <string name="menu">Menu</string>
+    <string name="hint_input">Type a message</string>
+    <string name="view">View Profile</string>
+    <string name="block">Block Contact</string>
+    <string name="clear">Clear Chat</string>
+    <string name="shortcut">Add to HomeScreen</string>
+    <string name="title_activity_nav_user">nav_user</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="account">Account</string>
+    <string name="title_activity_account_drawer_menu">AccountDrawerMenu</string>
+    <string name="title_activity_account_user">AccountUser</string>
+    <string name="title_activity_account">Account</string>
+    <string name="looking_for">Looking For</string>
+    <string name="smoker">Smoker</string>
+    <string name="body">Body</string>
+    <string name="body_hair">Body Hair</string>
+    <string name="eye_color">Eye Color</string>
+    <string name="hair_color">Hair Color</string>
+    <string name="piercings">Piercings</string>
+    <string name="tattoos">Tattoos</string>
+    <string name="male">Male</string>
+    <string name="other">Other</string>
+    <string name="female">Female</string>
+    <string name="settings">Settings</string>
+    <string name="premium">Premium</string>
+    <string name="feedback_amp_support"><![CDATA[Feedback & Support]]></string>
+    <string name="about_us">About Us</string>
+    <string name="privacy_statements">Privacy Statements</string>
+    <string name="logout">Logout</string>
+    <string name="no_favourites_yet">No favourites yet</string>
+    <string name="no_conversation_yet">No conversation yet</string>
+    <string name="not_visited_any_profile_yet">Not visited any profile yet</string>
+    <string name="seems_like_internet_is_down">Seems like internet is down</string>
+    <string name="no_messages_yet_send_a_message_to_begin_conversation">No messages yet. Send a message to begin conversation.</string>
+
+    <!--Social string lists 1-->
+    <string-array name="profession_list">
+        <item>Student</item>
+        <item>Apprentice</item>
+        <item>Employee</item>
+        <item>Blue-collar</item>
+        <item>Freelancer</item>
+        <item>Civil servant</item>
+        <item>Hedonist</item>
+        <item>Unemployed</item>
+        <item>Scholar</item>
+        <item>Non-military service</item>
+        <item>Army</item>
+        <item>Retired</item>
+        <item>White-collar</item>
+        <item>Gold-collar</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social string lists 2-->
+    <string-array name="religion_list">
+        <item>None</item>
+        <item>Apprentice</item>
+        <item>Agnostic</item>
+        <item>Anglican</item>
+        <item>Animist</item>
+        <item>Bahai</item>
+        <item>Baptist</item>
+        <item>Buddhist</item>
+        <item>Catholic</item>
+        <item>Christian</item>
+        <item>Confucianist</item>
+        <item>Hindu</item>
+        <item>Jewish</item>
+        <item>Lutheran</item>
+        <item>Methodist</item>
+        <item>Mormon</item>
+        <item>Muslim</item>
+        <item>New Age</item>
+        <item>Oriental Orthodox</item>
+        <item>Orthodox</item>
+        <item>Reformist</item>
+        <item>Sikh</item>
+        <item>Discordian</item>
+        <item>Atheist</item>
+        <item>Protestant</item>
+        <item>Pagan</item>
+        <item>Taoist</item>
+        <item>New Apostolic</item>
+        <item>Shinto</item>
+        <item>Old Catholic</item>
+        <item>Muslim(Sunni)</item>
+        <item>Muslim(Shia)</item>
+        <item>Humanist</item>
+    </string-array>
+
+    <!--Social string list 3-->
+    <string-array name="music_list">
+        <item>Alternative</item>
+        <item>Dance &amp; Electronic</item>
+        <item>Gothic &amp; New wave</item>
+        <item>Jazz &amp; Blues</item>
+        <item>Classical</item>
+        <item>Pop</item>
+        <item>KPop</item>
+        <item>Rap &amp; HipHop</item>
+        <item>RnB &amp; Soul</item>
+        <item>Reggae &amp; Ska</item>
+        <item>Rock</item>
+        <item>Schlager</item>
+        <item>Folk</item>
+        <item>Country</item>
+        <item>Punk</item>
+        <item>Heavy metal</item>
+        <item>Oldies</item>
+        <item>World music</item>
+        <item>House &amp; Techno</item>
+        <item>Musical</item>
+        <item>Opera</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social string list - 4-->
+    <string-array name="food_list">
+        <item>Arab</item>
+        <item>Asian</item>
+        <item>Everything</item>
+        <item>Fast food</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Indian</item>
+        <item>Italian</item>
+        <item>Local</item>
+        <item>Mexican</item>
+        <item>Polish</item>
+        <item>Primordial Soup</item>
+        <item>Sushi</item>
+        <item>Tapes</item>
+        <item>Turkish</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social string list- 5-->
+
+    <string-array name="Sports_list">
+        <item>Badminton</item>
+        <item>Baseball</item>
+        <item>Biking</item>
+        <item>Climbing</item>
+        <item>Football</item>
+        <item>Golf</item>
+        <item>Gym</item>
+        <item>Handball</item>
+        <item>Hiking</item>
+        <item>Ice Hockey</item>
+        <item>Jogging</item>
+        <item>Martial Arts</item>
+        <item>Motor racing</item>
+        <item>No Sports</item>
+        <item>Rowing</item>
+        <item>Rugby</item>
+        <item>Sailing</item>
+        <item>Scuba diving</item>
+        <item>Skating</item>
+        <item>Snooker</item>
+        <item>Surfing</item>
+        <item>Swimming</item>
+        <item>Team Sports</item>
+        <item>Tennis</item>
+        <item>US Football</item>
+        <item>Volleyball</item>
+        <item>Winter sports</item>
+        <item>Wrestling</item>
+        <item>Yoga</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social string list - 6-->
+
+    <string-array name="Interests_list">
+        <item>Art</item>
+        <item>Board games</item>
+        <item>Cars</item>
+        <item>Collecting</item>
+        <item>Computers</item>
+        <item>Cooking</item>
+        <item>Dance</item>
+        <item>Film &amp; Video</item>
+        <item>Gaming</item>
+        <item>Literature</item>
+        <item>Model building</item>
+        <item>Motorbikes</item>
+        <item>Music</item>
+        <item>Nature</item>
+        <item>Photography</item>
+        <item>Politics</item>
+        <item>TV</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social strings list - 7-->
+    <string-array name="travel_list">
+        <item>Adventure</item>
+        <item>All Inclusive Holiday</item>
+        <item>City breaks</item>
+        <item>Cruise</item>
+        <item>Individual</item>
+        <item>Mountains</item>
+        <item>Sun</item>
+        <item>Wellness</item>
+        <item>Winter</item>
+        <item>Beaches</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--Social strings list - 8-->
+    <string-array name="Going_list">
+        <item>Arts</item>
+        <item>Bar</item>
+        <item>club</item>
+        <item>Concert</item>
+        <item>Exhibition</item>
+        <item>Movies</item>
+        <item>Private Parties</item>
+        <item>Sports</item>
+        <item>Theater</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="looking_for">
+        <item>Friends</item>
+        <item>Relationship</item>
+        <item>Sex</item>
+    </string-array>
+
+    <string-array name="Smoker_list">
+        <item>No entry</item>
+        <item>No</item>
+        <item>Socially</item>
+        <item>Yes</item>
+    </string-array>
+
+    <string-array name="body_list">
+        <item>Slim</item>
+        <item>Athletic</item>
+        <item>Stocky</item>
+        <item>Chubby</item>
+        <item>Muscular</item>
+        <item>Belly</item>
+        <item>Average</item>
+    </string-array>
+
+    <string-array name="body_hair_list">
+        <item>Smooth</item>
+        <item>Shaved</item>
+        <item>Not very hairy</item>
+        <item>Hairy</item>
+        <item>Very Hairy</item>
+    </string-array>
+
+    <string-array name="language_list">
+        <item>Dutch</item>
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Hindi</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>Tagalog</item>
+        <item>Afrikaans</item>
+        <item>Albanian</item>
+        <item>Arabic</item>
+        <item>Armenian</item>
+        <item>Azerbaijani</item>
+        <item>Basque</item>
+        <item>Belarusian</item>
+        <item>Bengali</item>
+        <item>Bosnian</item>
+        <item>Bulgarian</item>
+        <item>Burmese</item>
+        <item>Cambodian</item>
+        <item>canadian French</item>
+        <item>Catalan</item>
+        <item>Cebuano</item>
+        <item>Chinese</item>
+        <item>Croatian</item>
+        <item>Czech</item>
+        <item>Danish</item>
+        <item>Esperanto</item>
+        <item>Estonian</item>
+        <item>finnish</item>
+        <item>Galician</item>
+        <item>Georgian</item>
+        <item>Greek</item>
+        <item>Greenlandic(Kalaallisut)</item>
+        <item>Hebrew</item>
+        <item>Hungarian</item>
+        <item>Icelandic</item>
+        <item>Indonesian</item>
+        <item>Japanese</item>
+        <item>Kannada</item>
+        <item>Korean</item>
+        <item>Kurdish</item>
+        <item>Lao</item>
+        <item>Latin</item>
+        <item>Latvian</item>
+        <item>Lithuanian</item>
+        <item>Luxembourgish</item>
+        <item>Macedonian</item>
+        <item>Malay</item>
+        <item>Malayalam</item>
+        <item>Maltese</item>
+        <item>Marathi</item>
+        <item>Norwegian</item>
+        <item>Occitan</item>
+        <item>Pashto</item>
+        <item>Persian</item>
+        <item>Polish</item>
+        <item>Portuguese</item>
+        <item>Romanian</item>
+        <item>Romansch</item>
+        <item>Russian</item>
+        <item>Scottish Gaelic</item>
+        <item>Serbian</item>
+        <item>Serbo-Croatian</item>
+        <item>Sign language</item>
+        <item>Slovak</item>
+        <item>Slovenian</item>
+        <item>Sorbian</item>
+        <item>Swedish</item>
+        <item>Swiss-German</item>
+        <item>Tamazight</item>
+        <item>Tamil</item>
+        <item>Telugu</item>
+        <item>Thai</item>
+        <item>Turkish</item>
+        <item>US English</item>
+        <item>Ukrainian</item>
+        <item>Ukrainian</item>
+        <item>Vietnamese</item>
+        <item>Welsh</item>
+    </string-array>
+
+    <string-array name="eyes_list">
+        <item>Blue</item>
+        <item>Brown</item>
+        <item>Grey</item>
+        <item>Green</item>
+        <item>Hazel</item>
+        <item>Eye mods</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="hair_color_list">
+        <item>Blond</item>
+        <item>Light Brown</item>
+        <item>Brown</item>
+        <item>Black</item>
+        <item>Grey</item>
+        <item>Red</item>
+        <item>Hair mods</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="Piercings_list">
+        <item>A few</item>
+        <item>A lot</item>
+        <item>No piercings</item>
+
+    </string-array>
+
+    <string-array name="tattoos_list">
+        <item>A few</item>
+        <item>A lot</item>
+        <item>No tattoos</item>
+    </string-array>
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="name_logo">IN4CHAN<sup>®</sup></string>
+    <string name="title_activity_chat_list">ChatList</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_sign_up">SignUp</string>
+    <string name="filtering">filtering</string>
+    <string name="Default">Default</string>
+    <string name="image_of_the_user">Image of the User</string>
+    <string name="browse_profiles">Browse Profiles</string>
+    <string name="add">ADD</string>
+    <string name="send_message_to_server">send message to server</string>
+    <string name="chat_list">Chat List</string>
+    <string name="search">Search</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="no_friends_added_yet">No Friends added yet</string>
+
+
+</resources>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        android:padding="1dp">
+
+        <!-- Media -->
+        <ImageView
+            android:id="@+id/sent_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:scaleType="centerCrop" />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:padding="6dp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/message_sent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/time_sent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="@color/light_grey"
+                android:textSize="13sp" />
+
+            <ImageSwitcher
+                android:id="@+id/message_delivery_status_sent"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_outline_watch_later_24"
+                android:backgroundTint="@color/white"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

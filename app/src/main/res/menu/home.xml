@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dropdown_menu"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_menu_24"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+    <item
+        android:id="@+id/browse_profiles"
+        android:orderInCategory="100"
+        android:title="@string/browse_profiles"
+        android:icon="@drawable/ic_baseline_grid_on_24"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/edit_profile"
+        android:orderInCategory="100"
+        android:title="@string/edit_profile"
+        android:icon="@drawable/ic_baseline_edit_24"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        android:title="@string/logout"
+        android:icon="@drawable/logout"
+        app:showAsAction="never"/>
+        </menu>
+    </item>
+
+</menu>

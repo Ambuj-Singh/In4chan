@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "985764028438",
+    "project_id": "in4chan",
+    "storage_bucket": "in4chan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985764028438:android:cd7e0a869645c5f052d537",
+        "android_client_info": {
+          "package_name": "com.zodiac.in4chan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985764028438-6jrgsrmk9vlooajroh46757sad9j2664.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zodiac.in4chan",
+            "certificate_hash": "c1299c5689be2b085a28047ad6ed1789affcd703"
+          }
+        },
+        {
+          "client_id": "985764028438-1gfcpdqbaur53tbvqrdplke25as6s5se.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD26uUEiowXDM5Hd0Ug0kWd3fPs5YgHDsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985764028438-1gfcpdqbaur53tbvqrdplke25as6s5se.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

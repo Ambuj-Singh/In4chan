@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ChatList">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/action_bar_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="16dp">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/profiles_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:popupTheme="@style/MyDarkToolbarStyle"
+            app:menu="@menu/friends_menu"
+            app:title="Friends"
+            app:titleTextColor="@color/white"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_friends_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        />
+</LinearLayout>
+<LinearLayout
+android:id="@+id/no_friends_img"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_centerInParent="true"
+android:orientation="vertical">
+<ImageView
+    android:layout_width="75dp"
+    android:layout_height="75dp"
+    android:layout_gravity="center"
+    android:src="@drawable/ic_baseline_supervisor_account_24"
+    app:tint="@color/gray" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/rubik_regular"
+    android:layout_gravity="center"
+    android:textColor="@color/gray"
+    android:text="@string/no_friends_added_yet"/>
+
+</LinearLayout>
+    </RelativeLayout>

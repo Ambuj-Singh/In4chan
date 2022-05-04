@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    tools:context=".ChatList">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/action_bar_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="16dp">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/profiles_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:popupTheme="@style/MyDarkToolbarStyle"
+            app:menu="@menu/home"
+            />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_chatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>

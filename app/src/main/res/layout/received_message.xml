@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:layout_gravity="start"
+        android:background="@drawable/received"
+        android:orientation="vertical">
+
+        <!-- Media -->
+        <ImageView
+            android:id="@+id/received_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            />
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:padding="8dp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/message_received"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadline6" />
+
+            <TextView
+                android:id="@+id/time_received"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="4dp"
+                android:textSize="13sp"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textColor="@color/light_grey" />
+
+            <ImageSwitcher
+                android:id="@+id/message_delivery_status_received"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="bottom|end"
+                android:background="@drawable/ic_outline_watch_later_24"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/white"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

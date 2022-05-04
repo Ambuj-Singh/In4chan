@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/dropdown_menu"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_menu_24"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/browse_profiles_friends"
+                android:title="@string/browse_profiles"
+                android:icon="@drawable/ic_baseline_grid_on_24"
+                app:showAsAction="never"
+                android:onClick="onOptionsItemSelected"
+                />
+
+            <item
+                android:id="@+id/search_menu_friends"
+                android:enabled="true"
+                android:icon="@drawable/ic_baseline_search_24"
+                android:title="@string/search"
+                android:onClick="onOptionsItemSelected"/>
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/dropdown_menu"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_menu_24"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/toolbar_view"
+                android:enabled="true"
+                android:icon="@drawable/ic_baseline_remove_red_eye_24"
+                android:title="@string/view" />
+            <item
+                android:id="@+id/toolbar_block"
+                android:enabled="true"
+                android:icon="@drawable/ic_baseline_block_24"
+                android:title="@string/block" />
+            <item
+                android:id="@+id/toolbar_delete"
+                android:enabled="true"
+                android:icon="@drawable/ic_baseline_delete_sweep_24"
+                android:title="@string/clear" />
+            <item
+                android:id="@+id/toolbar_shortcut"
+                android:enabled="true"
+                android:icon="@drawable/ic_baseline_add_to_home_screen_24"
+                android:title="@string/shortcut" />
+        </menu>
+    </item>
+
+</menu>

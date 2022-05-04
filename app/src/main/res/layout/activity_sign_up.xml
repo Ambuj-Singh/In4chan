@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    tools:context=".SignUp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/sign_up_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TextView"
+                style="@style/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:text="@string/signUp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:id="@+id/til_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/email"
+                app:errorEnabled="true"
+                app:errorContentDescription="Email not valid"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_username"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:hint="@string/user"
+                app:errorEnabled="true"
+                app:errorContentDescription="Username already exists">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/age"
+                style="@style/title"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                android:onClick="showDatePicker"
+                android:textColor="@color/grey"
+                android:background="@drawable/material_text"
+                android:text="@string/age" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:id="@+id/til_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:hint="@string/pass"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/PinkDark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/grey"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:id="@+id/til_cpassword"
+                android:hint="@string/c_pass"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/PinkDark">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass1"
+                    android:textColor="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/TermsConditions"
+                style="@style/Theme.MaterialComponents"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:buttonTint="@color/white"
+                android:textColor="@color/white"
+                android:textColorLink="@color/colorPrimaryDark"
+                android:checked="true"
+                android:text="@string/Terms_cond" />
+
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/pb_sign"
+          app:trackColor="@color/black"
+            android:indeterminate="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="615dp" />
+
+        <Button
+            android:id="@+id/register"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="250dp"
+            android:layout_height="55dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="610dp"
+            android:text="@string/signUp" />
+
+
+    </RelativeLayout>
+
+</ScrollView>

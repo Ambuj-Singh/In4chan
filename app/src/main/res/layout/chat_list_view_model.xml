@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusable="true">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_list_card"
+        app:cardBackgroundColor="@color/dark_grey"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:id="@+id/online_offline_user"
+                android:layout_margin="4dp"
+                android:layout_width="wrap_content"
+                android:background="@drawable/profile_online"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="2dp"
+                    app:cardBackgroundColor="@color/transparent"
+                    app:cardCornerRadius="250dp">
+                    <ImageView
+                        android:id="@+id/profile_display_list"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+                        android:padding="2dp"
+                        android:background="@drawable/circular_image"
+                        android:src="@drawable/ic_baseline_account_circle_24"/>
+
+                </com.google.android.material.card.MaterialCardView>
+                <!-- Buttons -->
+            </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:padding="4dp">
+
+                <!-- Title, secondary and supporting text -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/user_name_list"
+                        android:textColor="@color/white"
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceHeadline6" />
+                    <TextView
+                        android:id="@+id/last_message_time_list"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="5:00 pm"
+                        android:textAlignment="textEnd"
+                        tools:ignore="RtlCompat" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="8dp">
+                    <ImageSwitcher
+                        android:layout_weight="0"
+                        android:id="@+id/message_delivery_status_list"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="4dp"
+                        android:background="@drawable/ic_outline_watch_later_24" />
+
+                    <TextView
+                        android:id="@+id/message_view_list"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shortcut"
+                        android:layout_gravity="center"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="@color/grey" />
+
+                    <TextView
+                        android:id="@+id/message_counter_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="45dp"
+                        android:padding="4dp"
+                        android:gravity="center"
+                        android:background="@drawable/message_counter"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        tools:ignore="SmallSp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

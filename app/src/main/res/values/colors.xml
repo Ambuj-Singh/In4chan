@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="grayish_purple">#33003B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#A9A9A9</color>
+    <color name="colorPrimary">#02bcee</color>
+    <color name="received_message">#333399</color>
+    <color name="sent_message">#2C429E</color>
+    <color name="colorPrimaryDark">#0094bb</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="General">#31004A</color>
+    <color name="BlueTone">#33007B</color>
+    <color name="Purple">#4C004A</color>
+    <color name="PurpleTone">#8300C4</color>
+    <color name="LightPurple">#AB00FF</color>
+    <color name="cyan_teal">#00ffff</color>
+    <color name="grey">#808080</color>
+    <color name="dark_grey">#36454F</color>
+    <color name="light_grey">#BCBCBC</color>
+    <color name="sender_button">#008080</color>
+    <color name="Online_status_green">#7FFF00</color>
+    <color name="Offline_status_red">#FF0000</color>
+    <color name="PinkDark">#c70076</color>
+    <color name="transparent">#00000000</color>
+</resources>

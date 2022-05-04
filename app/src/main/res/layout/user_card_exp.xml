@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_exp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/colorPrimaryDark">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- Media -->
+    <ImageView
+        android:id="@+id/display_profile_exp"
+        android:layout_width="match_parent"
+        android:layout_height="194dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/image_of_the_user"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title, secondary and supporting text -->
+        <TextView
+            android:id="@+id/user_name_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Default"
+            android:textColor="@color/white"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            />
+        <TextView
+            android:id="@+id/age_view_user_status_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/Default"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/Default"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            />
+
+    </LinearLayout>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/chat_with_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/chat"
+            style="?attr/borderlessButtonStyle"
+            android:textColor="@color/colorAccent"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/Add_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add"
+            style="?attr/borderlessButtonStyle"
+            android:textColor="@color/colorAccent"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
