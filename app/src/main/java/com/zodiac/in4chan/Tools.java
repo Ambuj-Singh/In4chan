@@ -10,7 +10,7 @@ import java.util.Date;
 public class Tools {
 
     private static String username;
-    public static final String firebaseURL = "https://in4chan-default-rtdb.asia-southeast1.firebasedatabase.app";
+    public static final String firebaseURL = "https://in4chan-default-rtdb.asia-southeast1.firebasedatabase.app/";
     public static String getTimeStamp(long timestamp){
         //converting timestamp to String in 12:00 pm format
         try {
@@ -47,7 +47,7 @@ public class Tools {
     }
 
     public static String getQueryFromModel(MessageModel messageModel,String senderTable){
-        return "insert into "+senderTable+" values +("+messageModel.getSender()+","+messageModel.getReceiver()+","+messageModel.getImagePath()
+        return "insert into "+senderTable+" values ("+messageModel.getSender()+","+messageModel.getReceiver()+","+messageModel.getImagePath()
                 +"," +messageModel.getMessage()+","+messageModel.getTimestamp()+","+messageModel.getFilePath()+","+Tools.booleanToInteger(messageModel.getRead())+","+Tools.booleanToInteger(messageModel.isDelivery())+");";
     }
 

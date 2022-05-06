@@ -39,7 +39,7 @@ public class ServiceChan extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://in4chan-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        FirebaseDatabase database = FirebaseDatabase.getInstance(Tools.firebaseURL);
         DatabaseReference reference = database.getReference(Tools.getUsername()+"/messages");
         DataContext dataContext = new DataContext(null,null,null,1);
         SQLiteDatabase sqLiteDatabase = dataContext.getWritableDatabase();
@@ -73,7 +73,7 @@ public class ServiceChan extends Service {
 
                for(String s : messages) {
                    sqLiteDatabase.execSQL(s, null);
-                   Log.i("Receiver_Swervice",s);
+                   Log.i("Receiver_Service",s);
 
                }
            }

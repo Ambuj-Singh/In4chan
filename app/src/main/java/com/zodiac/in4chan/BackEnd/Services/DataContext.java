@@ -6,11 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.zodiac.in4chan.BackEnd.Models.MessageModel;
 import com.zodiac.in4chan.BackEnd.Models.UserInfo;
+import com.zodiac.in4chan.Conversation;
 import com.zodiac.in4chan.Tools;
 
 import java.util.ArrayList;
@@ -30,8 +32,8 @@ public class DataContext extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String table_friends = "create table if not exists Friends" +
-                " (Username text, Name text, Image text, message text, timestamp integer, age integer, uid text);";
-        String table_messages = "create table if not exists message_table (sender text, receiver text, imagePath text, message text, timestamp integer, filePath text, read integer, delivery integer);";
+                "(id integer primary key autoincrement,Username text, Name text, Image text, message text, timestamp integer, age integer, uid text);";
+        String table_messages = "create table if not exists message_table (id integer primary key autoincrement,sender text, receiver text, imagePath text, message text, timestamp integer, filePath text, read integer, delivery integer);";
         sqLiteDatabase.execSQL(table_friends);
         sqLiteDatabase.execSQL(table_messages);
     }
@@ -47,32 +49,38 @@ public class DataContext extends SQLiteOpenHelper {
     }
 
     public void insertMessage(MessageModel message){
-            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+
+    /*    String query = "insert into message_table (sender, receiver, imagePath, message, timestamp, filepath, read, delivery) " +
+                "values('"+message.getSender()+"', '"+message.getReceiver()+"', '"+message.getImagePath()+"', '"+message.getMessage()+"', '"+message.getTimestamp()+"', '"+message.getFilePath()+"', "+Tools.booleanToInteger(message.getRead())+","+Tools.booleanToInteger(message.isDelivery())+");";
+ */
+         ContentValues values = new ContentValues();
         values.put("sender",message.getSender());
         values.put("receiver",message.getReceiver());
         values.put("imagePath",message.getImagePath());
         values.put("message",message.getMessage());
-        values.put("timpestamp",message.getTimestamp());
+        values.put("timestamp",message.getTimestamp());
         values.put("filePath",message.getFilePath());
         values.put("read", Tools.booleanToInteger(message.getRead()));
         values.put("delivery",Tools.booleanToInteger(message.isDelivery()));
 
-        db.insert("message_table",null,values);
+        long result = db.insert("message_table",null,values);
+        Log.i("result_insert", String.valueOf(result));
+        db.close();
+       /* db.execSQL(query);*/
     }
 
     public List<MessageModel> getAllChatMessages(String sender, String receiver){
 
         MessageModel messageModel = new MessageModel();
         List<MessageModel> messageModelList = new ArrayList<>();
-        String whereCondition = "((sender = '" + sender + "' and receiver='" + receiver + "') or (receiver = '" + sender + "' and sender='" + receiver + "'))";
-        String selectQuery = "select * from (select rowid, * from message_table where "+whereCondition+" order by rowid desc) order by rowid;";
-
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String whereCondition = "((sender = '" + sender + "' and receiver='" + receiver + "') or (receiver = '" + sender + "' and sender='" + receiver + "'))";
+        String selectQuery = "select sender, receiver, imagePath, message, timestamp, filepath, read, delivery from message_table where "+whereCondition+" order by timestamp asc;";
+
        try {
            Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
-
            cursor.moveToFirst();
            while (!cursor.isAfterLast()) {
                messageModel.setSender(cursor.getString(0));
@@ -97,8 +105,8 @@ public class DataContext extends SQLiteOpenHelper {
 
     }
 
-    public void insertUser(UserInfo user){
-        if(checkUserDuplication(user.getUsername()) == 0) {
+    public boolean insertUser(UserInfo user) {
+        if (checkUserDuplication(user.getUsername()) == 0) {
             SQLiteDatabase db = this.getWritableDatabase();
 
             ContentValues values = new ContentValues();
@@ -111,7 +119,11 @@ public class DataContext extends SQLiteOpenHelper {
             values.put("uid", user.getUID());
 
             db.insert("Friends", null, values);
+            db.close();
+            return true;
         }
+        else
+            return false;
     }
 
     public int checkUserDuplication(String username){
@@ -237,4 +249,8 @@ public class DataContext extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(update_timestamp_user);
     }
 
+    public void setDeliveryUpdate(MessageModel messageModel, boolean value) {
+        String query = "update message_table set delivery = "+Tools.booleanToInteger(value)+" where timestamp = "+messageModel.getTimestamp()+";";
+        this.getWritableDatabase().execSQL(query);
+    }
 }

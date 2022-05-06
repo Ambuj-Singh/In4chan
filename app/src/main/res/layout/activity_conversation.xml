@@ -32,7 +32,6 @@
         android:id="@+id/con_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="hide_attachments"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -42,9 +41,11 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:paddingBottom="66dp" />
+            android:paddingBottom="66dp"
+            app:stackFromEnd="true"
+            app:reverseLayout="true"/>
         <LinearLayout
-            android:id="@+id/no_wifi_img"
+            android:id="@+id/no_chat_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="625dp"

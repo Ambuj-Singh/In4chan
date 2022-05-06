@@ -1,6 +1,7 @@
 package com.zodiac.in4chan.BackEnd.ConversationMessageList;
 
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -32,7 +33,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
             case ITEM_LEFT:
                 return new ReceiverViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.received_message,parent,false));
             case ITEM_RIGHT:
-                return new SenderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.received_message,parent,false));
+                return new SenderViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.sent_message,parent,false));
         }
 
         return null;
@@ -40,8 +41,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
 
     @Override
     public void onBindViewHolder(@NonNull ConversationViewHolder holder, int position) {
-            final MessageModel messageModel = messageModelList.get(position);
-
+           final MessageModel messageModel = messageModelList.get(position);
             if(holder.getItemViewType() == ITEM_LEFT){
                 ReceiverViewHolder viewHolder = (ReceiverViewHolder) holder;
                 viewHolder.message.setText(messageModel.getMessage());
@@ -56,13 +56,14 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
             }
             else {
                 SenderViewHolder viewHolder = (SenderViewHolder) holder;
-                viewHolder.message.setText(messageModel.getMessage());
+                //image visibility : gone later change for a url than visibility : visible
+                viewHolder.message.setText( messageModel.getMessage());
                 viewHolder.time_sent.setText(Tools.getTimeStamp(messageModel.getTimestamp()));
                 //Potential error
                 if(messageModel.isDelivery()) {
-                    viewHolder.message_delivery.setImageDrawable(ResourcesCompat.getDrawable(Resources.getSystem(), Tools.getDelivery(messageModel.isDelivery()), null));
+                    viewHolder.message_delivery.setBackgroundResource(R.drawable.ic_baseline_check_24);
                     if (messageModel.getRead())
-                        viewHolder.message_delivery.setImageDrawable(ResourcesCompat.getDrawable(Resources.getSystem(), Tools.getRead(messageModel.getRead()), null));
+                        viewHolder.message_delivery.setBackgroundResource(R.drawable.ic_baseline_done_outline_24);
                 }
             }
 
@@ -88,7 +89,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
 
     public void addMessage(MessageModel messageModel){
         this.messageModelList.add(messageModel);
-        notifyItemInserted(messageModelList.size());
+        notifyDataSetChanged();
     }
 
     public void deleteMessage(int position){

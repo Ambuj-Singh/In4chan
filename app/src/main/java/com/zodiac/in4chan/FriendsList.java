@@ -44,7 +44,7 @@ public class FriendsList extends AppCompatActivity implements FriendsListAdapter
         binding = ActivityFriendsListBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        dataContext = new DataContext(this,null,null,1);
+        dataContext = new DataContext(this,null,null,2);
         users = dataContext.getAllUsers();
         binding.noFriendsImg.setVisibility(View.VISIBLE);
         if(users.isEmpty()){
@@ -166,6 +166,7 @@ public class FriendsList extends AppCompatActivity implements FriendsListAdapter
         i.putExtra("receiver", receiver);
         Log.i("prefrences","Overlord"+" "+receiver);
         startActivity(i);
+        finish();
     }
 
     @Override

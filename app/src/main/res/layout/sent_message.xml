@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:layout_height="wrap_content"
     android:layout_width="match_parent"
+    android:paddingBottom="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
@@ -23,6 +24,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:padding="8dp"
+            android:visibility="gone"
             android:scaleType="centerCrop" />
 
         <!-- Buttons -->
@@ -54,7 +56,7 @@
                 android:textColor="@color/light_grey"
                 android:textSize="13sp" />
 
-            <ImageSwitcher
+            <ImageView
                 android:id="@+id/message_delivery_status_sent"
                 android:layout_width="15dp"
                 android:layout_height="15dp"

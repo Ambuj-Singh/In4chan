@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.common.ChangeEventType;
@@ -81,8 +82,13 @@ public class ServerUsers extends AppCompatActivity {
         AndroidThreeTen.init(this);
         binding = ActivityServerUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        dataContext = new DataContext(this, null, null, 1);
+        if(currentUser != null){
+            currentUser.reload();
+
+        dataContext = new DataContext(this, null, null, 2);
 
         db = FirebaseFirestore.getInstance();
         saveLatestAge(db);
@@ -123,6 +129,13 @@ public class ServerUsers extends AppCompatActivity {
                 progressDialog.cancel();
             }
         });
+
+        }
+        else{
+            Intent i = new Intent(ServerUsers.this, Login.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     @Override
@@ -254,14 +267,18 @@ public class ServerUsers extends AppCompatActivity {
                         userInfo.setMessage(tableName);
                         userInfo.setUID(model.getUID());
 
-                        dataContext.insertUser(userInfo);
+                        boolean result = dataContext.insertUser(userInfo);
+                        if(result)
+                            Toast.makeText(ServerUsers.this, "Friend added", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(ServerUsers.this, "Friend already added", Toast.LENGTH_SHORT).show();
                     }
                 });
 
                 holder.chat_with_user.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                            Intent i = new Intent(getApplicationContext(),Conversation.class);
+                            Intent i = new Intent(ServerUsers.this,Conversation.class);
                             i.putExtra("sender",Tools.getUsername());
                             i.putExtra("receiver",model.getusername());
                             startActivity(i);

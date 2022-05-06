@@ -11,7 +11,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.zodiac.in4chan"
+        applicationId "com.zodiac.In4chan"
         minSdk 23
         targetSdk 32
         versionCode 1
