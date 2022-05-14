@@ -11,7 +11,7 @@ public class UserInfoGrabber {
     private String username;
     private int Age;
     private String image;
-    private Boolean UserStatus;
+    private boolean UserStatus;
     private String UID;
     private String name;
 
@@ -20,7 +20,7 @@ public class UserInfoGrabber {
 
     }
 
-    public UserInfoGrabber(String username, int Age, String image, Boolean UserStatus, String UID, String name) {
+    public UserInfoGrabber(String username, int Age, String image, boolean UserStatus, String UID, String name) {
         this.username = username;
         this.Age = Age;
         this.image = image;
@@ -45,11 +45,11 @@ public class UserInfoGrabber {
         this.Age = Age;
     }
 
-    public Boolean getUserStatus() {
+    public boolean getUserStatus() {
         return UserStatus;
     }
 
-    public void setUserStatus(Boolean userStatus) {
+    public void setUserStatus(boolean userStatus) {
         UserStatus = userStatus;
     }
 

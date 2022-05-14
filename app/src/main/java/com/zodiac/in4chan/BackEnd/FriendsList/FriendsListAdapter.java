@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -18,16 +17,18 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.zodiac.in4chan.BackEnd.Models.UserInfo;
 
-import com.zodiac.in4chan.Tools;
 import com.zodiac.in4chan.R;
+import com.zodiac.in4chan.Tools;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListViewModel> {
 
-    List<UserInfo> usersList = new ArrayList<>();
-    FirebaseFirestore db;
+    private List<UserInfo> usersList = new ArrayList<>();
+    private FirebaseFirestore db;
+    private FriendsListViewModel holder;
+    private int position;
 
     public FriendsListAdapter(List<UserInfo> usersList, Interaction interaction){
         this.usersList = usersList;
@@ -46,46 +47,25 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListViewMode
         final UserInfo user = usersList.get(position);
 
         //holder items
-        holder.title.setText(user.getName());
-        db = FirebaseFirestore.getInstance();
-        String uid = user.getUID();
-        Query query = db.collection("users").whereEqualTo("UID",uid).whereEqualTo("UserStatus",true);
-
+        holder.title.setText(user.getUsername());
+        boolean value = Tools.integerToBoolean(user.getUserStatus());
         //Resources.getSystem() when not extending the class to AppCompatActivity
-        getQuery(query, value -> {
             if(value)
-                holder.onlineOffline.setBackgroundResource(R.drawable.profile_online);
+                holder.onlineOffline.setVisibility(View.VISIBLE);
             else
-                holder.onlineOffline.setBackgroundResource(R.drawable.profile_offline);
-        });
+                holder.onlineOffline.setVisibility(View.GONE);
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                interaction.onChatClicked(position);
+                interaction.onChatClicked(holder.getBindingAdapterPosition());
             }
         });
 
 
     }
-    private interface getQueryResult{
-        void onCallback(boolean value);
-    }
 
-    private void getQuery(Query query, final getQueryResult callback){
-        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (queryDocumentSnapshots.size()!=0){
-                    Log.i("query_size", String.valueOf(queryDocumentSnapshots.size()));
-                    callback.onCallback(false);
-                }
-                else{
-                    callback.onCallback(true);
-                }
-            }
-        });
-    }
     @Override
     public int getItemCount() {
         return usersList.size();
@@ -97,7 +77,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListViewMode
         void onChatLongClicked(int position);
     }
 
-    Interaction interaction;
+    private Interaction interaction;
 
 
 }

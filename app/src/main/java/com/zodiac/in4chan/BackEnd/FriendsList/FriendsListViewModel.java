@@ -1,5 +1,6 @@
 package com.zodiac.in4chan.BackEnd.FriendsList;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ public class FriendsListViewModel extends RecyclerView.ViewHolder implements Vie
     MaterialCardView materialCardView;
     ImageView profile_pic;
     TextView title, message_view, time, messageCounter, readStatus;
-    FrameLayout onlineOffline;
+    ImageView onlineOffline;
     FriendsListAdapter.Interaction interaction;
 
     FriendsListViewModel(View item, FriendsListAdapter.Interaction interaction) {
@@ -29,6 +30,6 @@ public class FriendsListViewModel extends RecyclerView.ViewHolder implements Vie
 
     @Override
     public void onClick(View view) {
-            interaction.onChatClicked(getBindingAdapterPosition());
+        interaction.onChatClicked(getBindingAdapterPosition());
     }
 }

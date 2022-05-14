@@ -1,5 +1,6 @@
 package com.zodiac.in4chan;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.zodiac.in4chan.BackEnd.Services.DataContext;
+
+import org.threeten.bp.LocalDate;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -44,7 +52,7 @@ public class Login extends AppCompatActivity {
         protected static boolean REQUEST_DENIED = false;
         protected static boolean REQUEST_ACCEPTED = true;
         protected boolean flag;
-
+        private DataContext dataContext;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +64,12 @@ public class Login extends AppCompatActivity {
             email = findViewById(R.id.l_email);
             password = findViewById(R.id.l_pass);
 
+            dataContext = new DataContext(this);
             forgot_password = findViewById(R.id.forgotten_pass);
             forgot_password.setVisibility(View.GONE);
             //TextInputLayout
             til_email_lg = findViewById(R.id.til_email_login);
             til_password_lg = findViewById(R.id.til_password_login);
-
-
 
             mAuth = FirebaseAuth.getInstance();
             pb = findViewById(R.id.pb);
@@ -80,9 +87,19 @@ public class Login extends AppCompatActivity {
                         public void onSuccess(AuthResult authResult) {
                             Toast.makeText(Login.this, "Logged In",
                                     Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), ServerUsers.class);
-                            startActivity(i);
-                            finish();
+                            String uid = FirebaseAuth.getInstance().getUid();
+                            CollectionReference cr = FirebaseFirestore.getInstance().collection("users");
+                            DocumentReference df = cr.document(uid);
+                            usernameCall(df, new getUsername() {
+                                @Override
+                                public void onCallback(String username, String uid) {
+                                    saveToLocalDB(uid,username);
+                                    Intent i = new Intent(getApplicationContext(), ServerUsers.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            });
+
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -108,18 +125,10 @@ public class Login extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent i = new Intent(getApplicationContext(),SignUp.class);
                     startActivity(i);
-                }
-            });
-
-        /*    signUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(Login.this,SignUp.class);
-                    startActivity(i);
                     finish();
                 }
             });
-*/
+
             //login button
           /*  login.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -336,4 +345,22 @@ public class Login extends AppCompatActivity {
         til_password_lg.setError(null);
     }
 
+    private interface getUsername {
+        void onCallback(String username,String uid);
+    }
+
+    //username fetching from server
+    private void usernameCall(DocumentReference df, final getUsername callback) {
+        df.get().addOnSuccessListener(documentSnapshot -> {
+            String username = documentSnapshot.getString("username");
+            String uid = documentSnapshot.getString("UID");
+            callback.onCallback(username,uid);
+        }).addOnFailureListener(e -> Log.i("Network", "interrupted"));
+    }
+
+    private void saveToLocalDB(String uid, String username) {
+        SQLiteDatabase sqLiteDatabase = dataContext.getWritableDatabase();
+        String insert = "insert into username(username, uid) values('"+username+"', '"+uid+"');";
+        sqLiteDatabase.execSQL(insert);
+    }
 }

@@ -32,8 +32,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.zodiac.in4chan.BackEnd.Services.DataContext;
-import com.zodiac.in4chan.BackEnd.Status_Offline;
-import com.zodiac.in4chan.BackEnd.Status_Online;
+import com.zodiac.in4chan.BackEnd.UserStatus.Status_Offline;
+import com.zodiac.in4chan.BackEnd.UserStatus.Status_Online;
 import com.zodiac.in4chan.databinding.ActivityChatListBinding;
 
 import org.threeten.bp.LocalDate;
@@ -65,7 +65,7 @@ public class ChatList extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        dataContext = new DataContext(null,null,null,1);
+        dataContext = new DataContext(this);
         List<UserInfo> users = dataContext.getAllLatestChatUsers();
         ChatListAdapter adapter = new ChatListAdapter(users);
 

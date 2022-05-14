@@ -1,12 +1,23 @@
 package com.zodiac.in4chan;
 
-import com.google.firebase.database.FirebaseDatabase;
+import
+import android.app.Application;
 
-public class In4chan extends android.app.Application{
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        //saving writes to cache when user goes offline or due to a network interruption
-        FirebaseDatabase.getInstance(Tools.firebaseURL).setPersistenceEnabled(true);
+public class In4Chan extends Application {
+
+    public static RegistrationKeyModel generateKeys() throws InvalidKeyException, IOException {
+        IdentityKeyPair identityKeyPair = KeyHelper.generateIdentityKeyPair();
+        int registrationId = KeyHelper.generateRegistrationId(false);
+        SignedPreKeyRecord signedPreKey = KeyHelper.generateSignedPreKey(identityKeyPair,new Random().nextInt(Medium.MAX_VALUE - 1));
+        List<PreKeyRecord> preKeys = KeyHelper.generatePreKeys(new Random().nextInt(Medium.MAX_VALUE - 101), 100);
+        return new RegistrationKeyModel(
+                identityKeyPair,
+                registrationId,
+                preKeys,
+                signedPreKey
+        );
     }
+
+
 }
+

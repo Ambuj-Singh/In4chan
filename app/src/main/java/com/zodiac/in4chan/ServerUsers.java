@@ -4,27 +4,26 @@ import static org.threeten.bp.Period.between;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +34,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.Timestamp;
@@ -50,13 +49,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.zodiac.in4chan.BackEnd.Models.UserInfo;
 import com.zodiac.in4chan.BackEnd.Models.UserInfoGrabber;
 import com.zodiac.in4chan.BackEnd.Services.DataContext;
-import com.zodiac.in4chan.BackEnd.Status_Offline;
-import com.zodiac.in4chan.BackEnd.Status_Online;
+import com.zodiac.in4chan.BackEnd.UserStatus.Status_Offline;
+import com.zodiac.in4chan.BackEnd.UserStatus.Status_Online;
 import com.zodiac.in4chan.databinding.ActivityServerUsersBinding;
 
 import org.threeten.bp.LocalDate;
@@ -67,7 +65,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-public class ServerUsers extends AppCompatActivity {
+public class ServerUsers extends AppCompatActivity implements LifecycleObserver {
     private RecyclerView recyclerView;
     private FirebaseFirestore db;
     private FirestoreRecyclerAdapter adapter;
@@ -82,15 +80,20 @@ public class ServerUsers extends AppCompatActivity {
         AndroidThreeTen.init(this);
         binding = ActivityServerUsersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser != null){
             currentUser.reload();
 
-        dataContext = new DataContext(this, null, null, 2);
+        dataContext = new DataContext(this);
 
         db = FirebaseFirestore.getInstance();
+
+        setStatusOnline();
+
         saveLatestAge(db);
         //Progress Dialog
         final ProgressDialog progressDialog = new ProgressDialog(ServerUsers.this);
@@ -105,29 +108,21 @@ public class ServerUsers extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         //querying all users
         Query query = db.collection("users");
-        String uid = FirebaseAuth.getInstance().getUid();
-        DocumentReference documentReference = db.collection("users").document(uid);
-        getUsername(documentReference, new waitTillResults() {
-            @Override
-            public void Callback(String username) {
-                Tools.setUsername(username);
-            }
-        });
-        getQuery(query, new getQueryResult() {
-            @Override
-            public void onCallback(boolean value) {
-                LinearLayout layout = binding.noWifiImg;
-                if(value){
-                    layout.setVisibility(View.VISIBLE);
-                }
-                else {
-                    layout.setVisibility(View.GONE);
 
-                    initializeData();
-                    StartListener();
-                }
-                progressDialog.cancel();
+
+
+        getQuery(query, value -> {
+            LinearLayout layout = binding.noWifiImg;
+            if(value){
+                layout.setVisibility(View.VISIBLE);
             }
+            else {
+                layout.setVisibility(View.GONE);
+
+                initializeData();
+                StartListener();
+            }
+            progressDialog.cancel();
         });
 
         }
@@ -136,6 +131,7 @@ public class ServerUsers extends AppCompatActivity {
             startActivity(i);
             finish();
         }
+
     }
 
     @Override
@@ -157,49 +153,22 @@ public class ServerUsers extends AppCompatActivity {
     }
 
     private void chatListSwitch() {
-
         Intent i = new Intent(getApplicationContext(), FriendsList.class);
         startActivity(i);
-        finish();
     }
-
-    private interface waitTillResults{
-        void Callback(String username);
-    }
-
-
-    private void getUsername(DocumentReference query,final waitTillResults callback){
-        query.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot != null) {
-                    UserInfoGrabber userInfo = documentSnapshot.toObject(UserInfoGrabber.class);
-                    if (userInfo != null)
-                        callback.Callback(userInfo.getusername());
-                    else
-                        callback.Callback(null);
-                }
-                callback.Callback(null);
-            }
-        });
-    }
-
 
     private interface getQueryResult{
         void onCallback(boolean value);
     }
 
     private void getQuery(Query query, final getQueryResult callback){
-        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if (queryDocumentSnapshots.size()!=0){
-                    Log.i("query_size", String.valueOf(queryDocumentSnapshots.size()));
-                    callback.onCallback(false);
-                }
-                else{
-                    callback.onCallback(true);
-                }
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if (queryDocumentSnapshots.size()!=0){
+                Log.i("query_size", String.valueOf(queryDocumentSnapshots.size()));
+                callback.onCallback(false);
+            }
+            else{
+                callback.onCallback(true);
             }
         });
     }
@@ -225,7 +194,7 @@ public class ServerUsers extends AppCompatActivity {
 
     //fetching data from server
     public void initializeData() {
-        final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String uid = dataContext.getUID();
 
         Query query = db.collection("users").whereNotEqualTo("UID",uid);
         FirestoreRecyclerOptions<UserInfoGrabber> response = new FirestoreRecyclerOptions.Builder<UserInfoGrabber>()
@@ -240,7 +209,7 @@ public class ServerUsers extends AppCompatActivity {
 
 
                 holder.title.setText(String.valueOf(model.getusername()));
-                holder.age_status.setText(String.valueOf("Age : " +model.getAge()));
+                holder.age_status.setText("Age : " +model.getAge());
                 //setting user status on data change
                 if (model.getUserStatus()) {
                     setOnline(holder.status);
@@ -248,41 +217,34 @@ public class ServerUsers extends AppCompatActivity {
                     setOffline(holder.status);
                 }
 
-
-
                 /*Glide.with(getContext())
                         .load(String.valueOf(model.image()))
                         .into(holder.profile_pic);
 */
-               holder.add_friend.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UserInfo userInfo = new UserInfo();
-                        userInfo.setUsername(model.getusername());
-                        userInfo.setName(model.getName());
-                        userInfo.setImage(model.getImage());
-                        userInfo.setAge(model.getAge());
-                        userInfo.setTimestamp(0);
-                        String tableName = model.getusername() + "_table";
-                        userInfo.setMessage(tableName);
-                        userInfo.setUID(model.getUID());
+               holder.add_friend.setOnClickListener(v -> {
+                   UserInfo userInfo = new UserInfo();
+                   userInfo.setUsername(model.getusername());
+                   userInfo.setName(model.getName());
+                   userInfo.setImage(model.getImage());
+                   userInfo.setAge(model.getAge());
+                   userInfo.setTimestamp(0);
+                   String tableName = model.getusername() + "_table";
+                   userInfo.setMessage(tableName);
+                   userInfo.setUID(model.getUID());
+                   userInfo.setUserStatus(Tools.booleanToInteger(model.getUserStatus()));
 
-                        boolean result = dataContext.insertUser(userInfo);
-                        if(result)
-                            Toast.makeText(ServerUsers.this, "Friend added", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(ServerUsers.this, "Friend already added", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                   boolean result = dataContext.insertUser(userInfo);
+                   if(result)
+                       Toast.makeText(ServerUsers.this, "Friend added", Toast.LENGTH_SHORT).show();
+                   else
+                       Toast.makeText(ServerUsers.this, "Friend already added", Toast.LENGTH_SHORT).show();
+               });
 
-                holder.chat_with_user.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                            Intent i = new Intent(ServerUsers.this,Conversation.class);
-                            i.putExtra("sender",Tools.getUsername());
-                            i.putExtra("receiver",model.getusername());
-                            startActivity(i);
-                    }
+                holder.chat_with_user.setOnClickListener(view -> {
+                        Intent i = new Intent(ServerUsers.this,Conversation.class);
+                        i.putExtra("sender",dataContext.getUsername());
+                        i.putExtra("receiver",model.getusername());
+                        startActivity(i);
                 });
             }
 
@@ -334,17 +296,10 @@ public class ServerUsers extends AppCompatActivity {
         WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequestB);
     }
 
-    public void StartListener(){
-        adapter.startListening();
-    }
-
-    //Sending userStatus to the server
     @Override
-    public void onStop() {
-        super.onStop();
-        if (adapter != null) {
-            adapter.stopListening();
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+
         if(oneTimeWorkRequestB!=null) {
             UUID getID = oneTimeWorkRequestB.getId();
             WorkManager.getInstance(getApplicationContext()).cancelWorkById(getID);
@@ -360,21 +315,25 @@ public class ServerUsers extends AppCompatActivity {
         WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequestA);
     }
 
-    public void setOnline(TextView tx){
-        tx.setText(getResources().getString(R.string.online));
-        tx.setTextColor(getResources().getColor(R.color.colorPrimaryDark,null));
+    public void StartListener(){
+        adapter.startListening();
     }
 
-    public void setOffline(TextView tx){
-        tx.setText(getResources().getString(R.string.offline));
-        tx.setTextColor(getResources().getColor(R.color.PinkDark,null));
+    //Sending userStatus to the server
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            adapter.stopListening();
+        }
+
+
     }
 
     //Sending userStatus to the server
     @Override
     protected void onResume() {
         super.onResume();
-
         if(oneTimeWorkRequestA!=null) {
             UUID getID = oneTimeWorkRequestA.getId();
             WorkManager.getInstance(getApplicationContext()).cancelWorkById(getID);
@@ -390,24 +349,14 @@ public class ServerUsers extends AppCompatActivity {
         WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequestB);
     }
 
+    public void setOnline(TextView tx){
+        tx.setText(getResources().getString(R.string.online));
+        tx.setTextColor(getResources().getColor(R.color.colorAccent,null));
+    }
 
-    //Sending userStatus to the server
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (oneTimeWorkRequestB != null) {
-            UUID getID = oneTimeWorkRequestB.getId();
-            WorkManager.getInstance(getApplicationContext()).cancelWorkById(getID);
-        }
-        Constraints constraints = new Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
-
-        oneTimeWorkRequestA = new OneTimeWorkRequest.Builder(Status_Offline.class)
-                .setConstraints(constraints)
-                .addTag("Status_Update")
-                .build();
-        WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequestA);
+    public void setOffline(TextView tx){
+        tx.setText(getResources().getString(R.string.offline));
+        tx.setTextColor(getResources().getColor(R.color.white,null));
     }
 
     private LocalDate Today() {
@@ -422,18 +371,12 @@ public class ServerUsers extends AppCompatActivity {
         assert currentUser != null;
 
         DocumentReference df = cr.document(currentUser.getUid());
+        //copy the function below and paste it in Login.
         getDateOfBirth(df, (date, username) -> {
-
-            SharedPreferences sharedPreferences = ServerUsers.this.getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username",username);
-            editor.putString("uid",currentUser.getUid());
-            editor.apply();
 
             int age = between(date, today).getYears();
             Map<String, Object> Age = new HashMap<>();
             Age.put("Age", age);
-            Age.put("UserStatus",true);
             Age.put("LastOnline", Timestamp.now());
             FirebaseUser currentUser1 = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db1 = FirebaseFirestore.getInstance();
@@ -459,5 +402,43 @@ public class ServerUsers extends AppCompatActivity {
         }).addOnFailureListener(e -> Log.i("Network", "interrupted"));
     }
 
+    public void setStatusOnline() {
+        CollectionReference collectionReference = db.collection("users");
+        DocumentReference df = collectionReference.document(dataContext.getUID());
 
+        Map<String, Object> status = new HashMap<>();
+        status.put("UserStatus", true);
+        df.update(status).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("User_status","online");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("User_status","auth failed");
+            }
+        });
+
+    }
+
+    public void setStatusOffline() {
+
+        CollectionReference collectionReference = db.collection("users");
+        DocumentReference df = collectionReference.document(dataContext.getUID());
+
+        Map<String, Object> status = new HashMap<>();
+        status.put("UserStatus", false);
+        df.update(status).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i("User_status","online");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("User_status","auth failed");
+            }
+        });
+    }
 }

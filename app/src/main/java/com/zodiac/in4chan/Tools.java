@@ -47,8 +47,8 @@ public class Tools {
     }
 
     public static String getQueryFromModel(MessageModel messageModel,String senderTable){
-        return "insert into "+senderTable+" values ("+messageModel.getSender()+","+messageModel.getReceiver()+","+messageModel.getImagePath()
-                +"," +messageModel.getMessage()+","+messageModel.getTimestamp()+","+messageModel.getFilePath()+","+Tools.booleanToInteger(messageModel.getRead())+","+Tools.booleanToInteger(messageModel.isDelivery())+");";
+        return "insert into "+senderTable+" (sender, receiver, imagePath, message, timestamp, filePath, read, delivery) values ('"+messageModel.getSender()+"','"+messageModel.getReceiver()+"','"+messageModel.getImagePath()
+       +"','" +messageModel.getMessage()+"',"+messageModel.getTimestamp()+",'"+messageModel.getFilePath()+"',"+Tools.booleanToInteger(messageModel.getRead())+",1);";
     }
 
     public static String getUsername() {

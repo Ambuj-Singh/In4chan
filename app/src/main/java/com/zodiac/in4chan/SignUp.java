@@ -1,5 +1,6 @@
 package com.zodiac.in4chan;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,6 +42,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.zodiac.in4chan.BackEnd.Services.DataContext;
 
 import org.threeten.bp.DateTimeUtils;
 import org.threeten.bp.Instant;
@@ -70,7 +72,7 @@ public class SignUp extends AppCompatActivity {
     protected FirebaseFirestore db;
     protected CollectionReference cr;
     protected ProgressBar pb_s;
-
+    private final DataContext dataContext = new DataContext(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,19 +120,13 @@ public class SignUp extends AppCompatActivity {
                                         String uid = user.getUid();
                                         //saving to database...
                                         saveInfo(date, uid, user_name);
-                                        //creating a sharedPreference
-                                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("username", user_name);
-                                        editor.putString("uid", uid);
-                                        editor.apply();
-
                                         Toast.makeText(SignUp.this, "Registration successful",
                                                 Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(SignUp.this, Login.class);
                                         startActivity(i);
                                         finish();
                                     } else {
+                                        Log.i("error", String.valueOf(task.getException()));
                                         Toast.makeText(SignUp.this, "Network unavailable",
                                                 Toast.LENGTH_LONG).show();
                                         pb_s.setVisibility(View.GONE);
@@ -310,8 +306,9 @@ public class SignUp extends AppCompatActivity {
     protected void saveInfo(LocalDate date, String uid, String username){
         String dob = date.toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        //save to local database
+        saveToLocalDB(uid,username);
         List<String> fav_list = new ArrayList<>();
         fav_list.add("admin");
         Map<String, Object> data = new HashMap<>();
@@ -320,6 +317,7 @@ public class SignUp extends AppCompatActivity {
         data.put("UID",uid);
         data.put("favourite",fav_list);
         data.put("profile_image","image");
+        data.put("UserStatus", true);
         db.collection("users").document(uid).set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -345,6 +343,13 @@ public class SignUp extends AppCompatActivity {
                     }
                 });
     }
+
+    private void saveToLocalDB(String uid, String username) {
+        SQLiteDatabase sqLiteDatabase = dataContext.getWritableDatabase();
+        String insert = "insert into username(username, uid) values('"+username+"', '"+uid+"');";
+        sqLiteDatabase.execSQL(insert);
+    }
+
     private void setupHyperLink(){
         CheckBox checkBox = findViewById(R.id.TermsConditions);
         checkBox.setMovementMethod(LinkMovementMethod.getInstance());

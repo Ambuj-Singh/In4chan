@@ -9,8 +9,9 @@ public class UserInfo {
     private long timestamp;
     private int age;
     private String UID;
+    private int UserStatus;
 
-    public UserInfo(String username, String name, String image, String message, long timestamp, int age, String UID){
+    public UserInfo(String username, String name, String image, String message, long timestamp, int age, String UID, int UserStatus){
         this.username = username;
         this.name = name;
         this.image = image;
@@ -18,6 +19,7 @@ public class UserInfo {
         this.timestamp = timestamp;
         this.age = age;
         this.UID = UID;
+        this.UserStatus = UserStatus;
     }
 
     public UserInfo(){
@@ -78,5 +80,14 @@ public class UserInfo {
 
     public void setUID(String UID) {
         this.UID = UID;
+    }
+
+
+    public int getUserStatus() {
+        return UserStatus;
+    }
+
+    public void setUserStatus(int userStatus) {
+        UserStatus = userStatus;
     }
 }

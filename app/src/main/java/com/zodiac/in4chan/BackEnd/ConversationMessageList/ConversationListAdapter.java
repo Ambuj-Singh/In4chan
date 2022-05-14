@@ -47,11 +47,10 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
                 viewHolder.message.setText(messageModel.getMessage());
                 viewHolder.time_receiver.setText(Tools.getTimeStamp(messageModel.getTimestamp()));
 
-                //Potential error
                 if(messageModel.isDelivery()) {
-                    viewHolder.message_delivery.setImageDrawable(ResourcesCompat.getDrawable(Resources.getSystem(), Tools.getDelivery(messageModel.isDelivery()), null));
+                    viewHolder.message_delivery.setBackgroundResource(R.drawable.ic_baseline_check_24);
                     if (messageModel.getRead())
-                        viewHolder.message_delivery.setImageDrawable(ResourcesCompat.getDrawable(Resources.getSystem(), Tools.getRead(messageModel.getRead()), null));
+                        viewHolder.message_delivery.setBackgroundResource(R.drawable.ic_baseline_done_outline_24);
                 }
             }
             else {
@@ -59,7 +58,7 @@ public class ConversationListAdapter extends RecyclerView.Adapter<ConversationVi
                 //image visibility : gone later change for a url than visibility : visible
                 viewHolder.message.setText( messageModel.getMessage());
                 viewHolder.time_sent.setText(Tools.getTimeStamp(messageModel.getTimestamp()));
-                //Potential error
+
                 if(messageModel.isDelivery()) {
                     viewHolder.message_delivery.setBackgroundResource(R.drawable.ic_baseline_check_24);
                     if (messageModel.getRead())

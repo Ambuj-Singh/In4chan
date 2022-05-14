@@ -11,6 +11,7 @@
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/material_text.xml" value="0.119" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/message_counter.xml" value="0.193" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/message_input_background.xml" value="0.1745" />
+        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/online_dot.xml" value="0.1" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/profile_offline.xml" value="0.184" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/profile_online.xml" value="0.193" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/drawable/received.xml" value="0.184" />
@@ -31,10 +32,10 @@
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/chat_list_view_model.xml" value="0.21770833333333334" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/fragment_first.xml" value="0.1" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/friend_list_activity.xml" value="0.21770833333333334" />
-        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/friends_list_view_model.xml" value="0.72" />
+        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/friends_list_view_model.xml" value="0.4" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/message_input.xml" value="0.2" />
-        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/received_message.xml" value="0.1" />
-        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/sent_message.xml" value="0.21770833333333334" />
+        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/received_message.xml" value="0.8" />
+        <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/sent_message.xml" value="0.72" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/user_card.xml" value="0.21770833333333334" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/layout/user_card_exp.xml" value="0.21770833333333334" />
         <entry key="..\:/Android_Projects/In4chan/app/src/main/res/menu/conversation_menu.xml" value="0.21770833333333334" />

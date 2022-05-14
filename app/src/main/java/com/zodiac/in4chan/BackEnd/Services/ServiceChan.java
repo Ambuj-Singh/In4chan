@@ -2,25 +2,23 @@ package com.zodiac.in4chan.BackEnd.Services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.zodiac.in4chan.BackEnd.Models.UserInfoGrabber;
 import com.zodiac.in4chan.Tools;
 
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +27,6 @@ public class ServiceChan extends Service {
     public ServiceChan(){
 
     }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -37,67 +34,69 @@ public class ServiceChan extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.i("serviceChan","start");
+        DataContext dataContext = new DataContext(this);
+
+        String sender = dataContext.getUsername();
+
         FirebaseDatabase database = FirebaseDatabase.getInstance(Tools.firebaseURL);
-        DatabaseReference reference = database.getReference(Tools.getUsername()+"/messages");
-        DataContext dataContext = new DataContext(null,null,null,1);
-        SQLiteDatabase sqLiteDatabase = dataContext.getWritableDatabase();
+        DatabaseReference reference = database.getReference("/messages");
+
+
+        Query query = FirebaseFirestore.getInstance().collection("users").whereEqualTo("UserStatus",true);
+
+
+        query.addSnapshotListener((value, error) -> {
+            if(error != null){
+                Log.i("status_set","Listening failed : "+error.getMessage());
+                return;
+            }
+            if (value != null){
+                List<UserInfoGrabber> users = value.toObjects(UserInfoGrabber.class);
+                boolean check = dataContext.updateStatus(users);
+                if(check) Log.i("status_set","updated");
+            }
+        });
 
         reference.addChildEventListener(new ChildEventListener() {
-           @Override
-           public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-               List<String> messages = new ArrayList<>();
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Map map = snapshot.getValue(Map.class);
 
-               Map map = snapshot.getValue(Map.class);
+                String message = "";
+                for (Object s : map.keySet())
+                    message = String.valueOf(map.get(s));
+                Log.i("message_service",message);
+            }
 
-               List<String> list = new ArrayList<>(map.keySet());
-               for (int i = list.size()-1; i>=0; i--) {
-                   messages.add(String.valueOf(map.get(list.get(i))));
-               }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-               for(Object o : list)
-                   map.put(o,1);
+            }
 
-               reference.updateChildren(map).addOnSuccessListener(new OnSuccessListener() {
-                   @Override
-                   public void onSuccess(Object o) {
-                        Log.i("Update","success");
-                   }
-               }).addOnFailureListener(new OnFailureListener() {
-                   @Override
-                   public void onFailure(@NonNull Exception e) {
-                       Log.i("Update","failure");
-                   }
-               });
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-               for(String s : messages) {
-                   sqLiteDatabase.execSQL(s, null);
-                   Log.i("Receiver_Service",s);
+            }
 
-               }
-           }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-           @Override
-           public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
 
-           }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-           @Override
-           public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-           }
-
-           @Override
-           public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-           }
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError error) {
-
-           }
-       });
+            }
+        });
        return START_STICKY;
     }
 
@@ -107,4 +106,5 @@ public class ServiceChan extends Service {
         if(FirebaseAuth.getInstance().getUid() != null)
             sendBroadcast(new Intent(this,ServiceChan.class));
     }
+
 }
