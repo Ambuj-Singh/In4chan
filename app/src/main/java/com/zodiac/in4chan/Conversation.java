@@ -27,8 +27,10 @@ import com.google.firebase.database.GenericTypeIndicator;
 import com.zodiac.in4chan.BackEnd.ConversationMessageList.ConversationListAdapter;
 import com.zodiac.in4chan.BackEnd.Models.MessageModel;
 import com.zodiac.in4chan.BackEnd.Services.DataContext;
+import com.zodiac.in4chan.BackEnd.Services.Encryption;
 import com.zodiac.in4chan.databinding.ActivityConversationBinding;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +80,7 @@ public class Conversation extends AppCompatActivity {
             binding.noChatImg.setVisibility(View.GONE);
             adapter.setChatMessages(messageModelList, receiver);
             recyclerView.setAdapter(adapter);
+            recyclerView.smoothScrollToPosition(messageModelList.size()-1);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -100,6 +103,7 @@ public class Conversation extends AppCompatActivity {
                 messageModel.setTimestamp(System.currentTimeMillis());
                 //adding to the view
                 adapter.addMessage(messageModel);
+                recyclerView.smoothScrollToPosition(messageModelList.size());
                 dataContext.insertMessage(messageModel);
                 dataContext.updateTimestampOfUser(sender, messageModel.getTimestamp());
 
@@ -111,6 +115,7 @@ public class Conversation extends AppCompatActivity {
                             dataContext.setDeliveryUpdate(messageModel, value);
                             List<MessageModel> list = dataContext.getAllChatMessages(sender, receiver);
                             adapter.setChatMessages(list, receiver);
+                            recyclerView.smoothScrollToPosition(list.size()-1);
                         }
                     }
                 });
@@ -152,7 +157,11 @@ public class Conversation extends AppCompatActivity {
 
                 reference.child(snapshot.getKey()).removeValue();
 
-                sqLiteDatabase.execSQL(message);
+                Encryption encryption = new Encryption();
+
+                String decryptedMessage = encryption.decrypt(message,Tools.secret);
+
+                sqLiteDatabase.execSQL(decryptedMessage);
                 List<MessageModel> list = dataContext.getAllChatMessages(sender, receiver);
                 binding.noChatImg.setVisibility(View.GONE);
                 adapter.setChatMessages(list, receiver);
@@ -195,9 +204,11 @@ public class Conversation extends AppCompatActivity {
 
     public void sendToServer(MessageModel messageModel, String msg, final getResult callback) {
         String query = Tools.getQueryFromModel(messageModel, msg);
+        String encryptedQuery = new Encryption().encrypt(query,Tools.secret);
         Log.i("sendToServer", query);
-
-        documentReference.push().setValue(query).addOnSuccessListener(new OnSuccessListener<Void>() {
+        Map<Long,String> map = new HashMap<>();
+        map.put(messageModel.getTimestamp(),encryptedQuery);
+        documentReference.push().setValue(encryptedQuery).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 callback.onCallback(true);

@@ -16,6 +16,8 @@ import com.zodiac.in4chan.BackEnd.Models.UserInfoGrabber;
 import com.zodiac.in4chan.Conversation;
 import com.zodiac.in4chan.Tools;
 
+import org.whispersystems.libsignal.IdentityKeyPair;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,9 +38,12 @@ public class DataContext extends SQLiteOpenHelper {
                 "(id integer primary key autoincrement,Username text, Name text, Image text, message text, timestamp integer, age integer, uid text, online integer);";
         String table_messages = "create table if not exists message_table (id integer primary key autoincrement,sender text, receiver text, imagePath text, message text, timestamp integer, filePath text, read integer, delivery integer);";
         String username = "create table if not exists username(username text, uid text);";
+        String keys = "create table if not exists keys(publicKey blob, privateKey blob, registrationId integer, preKeysId text, signedPreKey text)";
+
         sqLiteDatabase.execSQL(username);
         sqLiteDatabase.execSQL(table_friends);
         sqLiteDatabase.execSQL(table_messages);
+        sqLiteDatabase.execSQL(keys);
 
     }
 
@@ -72,6 +77,29 @@ public class DataContext extends SQLiteOpenHelper {
         long result = db.insert("message_table",null,values);
 
        /* db.execSQL(query);*/
+    }
+
+    public void insertMessage(MessageModel message, int timestamp){
+
+      if(checkMessageDuplication(timestamp) == 0) {
+          SQLiteDatabase db = this.getWritableDatabase();
+    /*    String query = "insert into message_table (sender, receiver, imagePath, message, timestamp, filepath, read, delivery) " +
+                "values('"+message.getSender()+"', '"+message.getReceiver()+"', '"+message.getImagePath()+"', '"+message.getMessage()+"', '"+message.getTimestamp()+"', '"+message.getFilePath()+"', "+Tools.booleanToInteger(message.getRead())+","+Tools.booleanToInteger(message.isDelivery())+");";
+ */
+          Log.i("result_insert_1", message.getReceiver());
+          ContentValues values = new ContentValues();
+          values.put("sender", message.getSender());
+          values.put("receiver", message.getReceiver());
+          values.put("imagePath", message.getImagePath());
+          values.put("message", message.getMessage());
+          values.put("timestamp", message.getTimestamp());
+          values.put("filePath", message.getFilePath());
+          values.put("read", Tools.booleanToInteger(message.getRead()));
+          values.put("delivery", Tools.booleanToInteger(message.isDelivery()));
+          Log.i("result_insert_1", message.getReceiver());
+          long result = db.insert("message_table", null, values);
+      }
+        /* db.execSQL(query);*/
     }
 
     public List<MessageModel> getAllChatMessages(String sender, String receiver){
@@ -148,6 +176,27 @@ public class DataContext extends SQLiteOpenHelper {
         try {
             db = getReadableDatabase();
             String query = "select count(*) from Friends where Username = '"+ username + "';";
+            cursor = db.rawQuery(query, null);
+
+            if(cursor.moveToFirst()){
+                Log.i("cursor", String.valueOf(cursor.getInt(0)));
+                return cursor.getInt(0);}
+            return 0;
+        }
+        finally {
+            if (cursor != null)
+                cursor.close();
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public int checkMessageDuplication(int timestamp){
+        Cursor cursor = null;
+        SQLiteDatabase db = null;
+        try {
+            db = getReadableDatabase();
+            String query = "select count(*) from message_table where timestamp = "+ timestamp + ";";
             cursor = db.rawQuery(query, null);
 
             if(cursor.moveToFirst()){
@@ -297,6 +346,7 @@ public class DataContext extends SQLiteOpenHelper {
         return username;
         }
 
+
     public boolean updateStatus(List<UserInfoGrabber> users) {
 
         try {
@@ -320,5 +370,18 @@ public class DataContext extends SQLiteOpenHelper {
         String deleteConversationQuery = "delete from message_table where "+whereCondition+";";
 
         this.getWritableDatabase().execSQL(deleteConversationQuery);
+    }
+
+    public void setKeysAndRegistrationId(IdentityKeyPair identityKeyPair, int registrationId){
+
+        byte[] publicKey = identityKeyPair.getPublicKey().serialize();
+        byte[] privateKey = identityKeyPair.getPrivateKey().serialize();
+
+        ContentValues values = new ContentValues();
+        values.put("publicKey", publicKey);
+        values.put("privateKey", privateKey);
+        values.put("registrationId", registrationId);
+
+        this.getWritableDatabase().insert("keys",null,values);
     }
 }

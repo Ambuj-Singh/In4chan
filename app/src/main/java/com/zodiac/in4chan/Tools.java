@@ -10,6 +10,7 @@ import java.util.Date;
 public class Tools {
 
     private static String username;
+    public static final String secret = "DECRYPT12345@";
     public static final String firebaseURL = "https://in4chan-default-rtdb.asia-southeast1.firebasedatabase.app/";
     public static String getTimeStamp(long timestamp){
         //converting timestamp to String in 12:00 pm format

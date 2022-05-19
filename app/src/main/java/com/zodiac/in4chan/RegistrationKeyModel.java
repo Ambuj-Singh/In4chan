@@ -1,12 +1,16 @@
 package com.zodiac.in4chan;
 
+import com.google.gson.Gson;
+
 import org.whispersystems.libsignal.IdentityKeyPair;
 import org.whispersystems.libsignal.InvalidKeyException;
 import org.whispersystems.libsignal.state.PreKeyRecord;
 import org.whispersystems.libsignal.state.SignedPreKeyRecord;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class RegistrationKeyModel {
@@ -38,11 +42,11 @@ public class RegistrationKeyModel {
     }
 
     public String getIdentityKeyPairString() {
-        return KeyUtils.encodeToBase64(identityKeyPair.serialize());
+        return KeyUtils.encode(identityKeyPair.serialize());
     }
 
     public String getIdentityKeyPublicString() {
-        return KeyUtils.encodeToBase64(identityKeyPair.getPublicKey().serialize());
+        return KeyUtils.encode(identityKeyPair.getPublicKey().serialize());
     }
 
     public void setIdentityKeyPair(IdentityKeyPair identityKey) {
@@ -64,7 +68,7 @@ public class RegistrationKeyModel {
     public String getPreKeyIds() {
         List<String> preKeyList = new ArrayList<>();
         for (PreKeyRecord preKey : preKeys) {
-            preKeyList.add(KeyUtils.encodeToBase64(preKey.serialize()));
+            preKeyList.add(KeyUtils.encode(preKey.serialize()));
         }
         return new Gson().toJson(preKeyList);
     }
@@ -74,7 +78,7 @@ public class RegistrationKeyModel {
     }
 
     public String getSignedPreKeyRecordString() {
-        return KeyUtils.encodeToBase64(signedPreKeyRecord.serialize());
+        return KeyUtils.encode(signedPreKeyRecord.serialize());
     }
 
     public void setSignedPreKeyRecord(SignedPreKeyRecord signedPreKeyRecord) {
@@ -82,11 +86,12 @@ public class RegistrationKeyModel {
     }
 
     public String getPublicIdentityKey() {
-        return KeyUtils.encodeToBase64(identityKeyPair.getPublicKey().serialize());
+
+        return KeyUtils.encode(identityKeyPair.getPublicKey().serialize());
     }
 
     public String getSignedPreKeyPublicKey() {
-        return KeyUtils.encodeToBase64(signedPreKeyRecord.getKeyPair().getPublicKey().serialize());
+        return KeyUtils.encode(signedPreKeyRecord.getKeyPair().getPublicKey().serialize());
     }
 
     public int getSignedPreKeyId() {
@@ -94,6 +99,6 @@ public class RegistrationKeyModel {
     }
 
     public String getSignedPreKeyRecordSignature() {
-        return KeyUtils.encodeToBase64(signedPreKeyRecord.getSignature());
+        return KeyUtils.encode(signedPreKeyRecord.getSignature());
     }
 }

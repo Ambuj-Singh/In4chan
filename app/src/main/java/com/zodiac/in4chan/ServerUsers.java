@@ -326,6 +326,19 @@ public class ServerUsers extends AppCompatActivity implements LifecycleObserver 
         if (adapter != null) {
             adapter.stopListening();
         }
+        if(oneTimeWorkRequestB!=null) {
+            UUID getID = oneTimeWorkRequestB.getId();
+            WorkManager.getInstance(getApplicationContext()).cancelWorkById(getID);
+        }
+        Constraints constraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        oneTimeWorkRequestA = new OneTimeWorkRequest.Builder(Status_Offline.class)
+                .setConstraints(constraints)
+                .addTag("Status_Update")
+                .build();
+        WorkManager.getInstance(getApplicationContext()).enqueue(oneTimeWorkRequestA);
 
 
     }
